@@ -1,0 +1,59 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>test</title>
+    <style type="text/css">
+        *
+        {
+            padding: 0;
+            margin: 0;
+        }
+
+        #div
+        {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            left: 300px;
+            top: 200px;
+            background: #f00;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="body_area">
+        <div id="content"></div>
+    </div>
+    <!--jquery-->
+    <script type="text/javascript" src="http://img.gd.sohu.com/js/jquery/jquery.js"></script>
+    <!--<script type="text/javascript" src="http://img.gd.sohu.com/js/jquery/jquery.mousewheel.js"></script>-->
+    <script type="text/javascript">
+
+        function log(o) {
+            try {
+                console.log(o);
+            }
+            catch (e) {
+                alert(o);
+            }
+        }
+
+        function addEvent(el, type, fn) {
+            if (el.addEventListener) {
+                el.addEventListener(type, fn, false);
+            }
+            else {
+                el.attachEvent('on' + type, fn);
+            }
+        }
+
+        //event 参数中有 data 属性，就是父窗口发送过来的数据
+        window.addEventListener("message", function (event) {
+            // 把父窗口发送过来的数据显示在子窗口中
+            document.getElementById("content").innerHTML += event.data + "<br/>";
+        }, false);
+
+    </script>
+</body>
+</html>

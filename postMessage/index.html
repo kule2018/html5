@@ -1,0 +1,65 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>test</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <style type="text/css">
+        *
+        {
+            padding: 0;
+            margin: 0;
+        }
+
+        #div
+        {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            left: 300px;
+            top: 200px;
+            background: #f00;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+        function log(o) {
+            try {
+                console.log(o);
+            }
+            catch (e) {
+                alert(o);
+            }
+        }
+
+        function addEvent(el, type, fn) {
+            if (el.addEventListener) {
+                el.addEventListener(type, fn, false);
+            }
+            else {
+                el.attachEvent('on' + type, fn);
+            }
+        }
+
+        function sendIt() {
+            // 通过 postMessage 向子窗口发送数据
+            document.getElementById("otherPage").contentWindow.postMessage(document.getElementById("message").value, "http://img.gzsas.sohu.com/songjunjun/html5/postmessage/");
+        } 
+
+    </script>
+    <div class="body_area">
+        <!-- 通过 iframe 嵌入子页面 -->
+        <iframe src="message.html" id="otherPage"></iframe>
+        <input type="text" id="message" />
+        <input type="button" value="Send to child.com" onclick="sendIt()" />
+    </div>
+    <!--jquery-->
+    <script type="text/javascript" src="http://img.gd.sohu.com/js/jquery/jquery.js"></script>
+    <!--<script type="text/javascript" src="http://img.gd.sohu.com/js/jquery/jquery.mousewheel.js"></script>-->
+</body>
+</html>

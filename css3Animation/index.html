@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>css3动画效果示例</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="Stylesheet" href="css/animate.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style type="text/css">
+        div.animated {
+            width: 100px;
+            height: 100px;
+            margin: 30px;
+            float: left;
+            background: #ffd800;
+        }
+
+        .none-stop {
+            -webkit-animation-iteration-count: infinite;
+            -moz-animation-iteration-count: infinite;
+            -o-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+        }
+    </style>
+    <script type="text/javascript" src="http://img.gd.sohu.com/js/jqmobi/jq.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //判断移动端
+            var isMobi = false;
+            if (/(iPhone|iPad|iPod|android|windows phone os|iemobile)/i.test(navigator.userAgent)) {
+                isMobi = true;
+            }
+            $('div.animated').each(function () {
+                var $this = $(this);
+                var animattion = $this.attr('data-ani');
+                if (isMobi) {
+                    $this.addClass(animattion);
+                }
+                else {
+                    $this.bind('mouseover', function () {
+                        $this.addClass(animattion);
+                    });
+                    $this.bind('mouseout', function () {
+                        $this.removeClass(animattion);
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2 style="text-align: center;">css3动画效果示例</h2>
+    <div id="content">
+        <fieldset>
+            <legend>flash效果</legend>
+            <div data-ani="flash" class="animated  none-stop">
+                flash
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>shake效果</legend>
+            <div data-ani="shake" class="animated  none-stop">
+                shake
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>bounce效果</legend>
+            <div data-ani="bounce" class="animated  none-stop">
+                bounce
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>tada效果</legend>
+            <div data-ani="tada" class="animated  none-stop">
+                tada
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>swing效果</legend>
+            <div data-ani="swing" class="animated  none-stop">
+                swing
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>wobble效果</legend>
+            <div data-ani="wobble" class="animated  none-stop">
+                wobble
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>pulse效果</legend>
+            <div data-ani="pulse" class="animated  none-stop">
+                pulse
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>flip效果</legend>
+            <div data-ani="flip" class="animated  none-stop">
+                flip
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>flipInX效果</legend>
+            <div data-ani="flipInX" class="animated  none-stop">
+                flipInX
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>flipOutX效果</legend>
+            <div data-ani="flipOutX" class="animated  none-stop">
+                flipOutX
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>flipInY效果</legend>
+            <div data-ani="flipInY" class="animated  none-stop">
+                flipInY
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>flipOutY效果</legend>
+            <div data-ani="flipOutY" class="animated  none-stop">
+                flipOutY
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeIn效果</legend>
+            <div data-ani="fadeIn" class="animated  none-stop">
+                fadeIn
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeInUp效果</legend>
+            <div data-ani="fadeInUp" class="animated  none-stop">
+                fadeInUp
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeInDown效果</legend>
+            <div data-ani="fadeInDown" class="animated  none-stop">
+                fadeInDown
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeInLeft效果</legend>
+            <div data-ani="fadeInLeft" class="animated  none-stop">
+                fadeInLeft
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeInRight效果</legend>
+            <div data-ani="fadeInRight" class="animated  none-stop">
+                fadeInRight
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeOut效果</legend>
+            <div data-ani="fadeOut" class="animated  none-stop">
+                fadeOut
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeOutUp效果</legend>
+            <div data-ani="fadeOutUp" class="animated  none-stop">
+                fadeOutUp
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeOutDown效果</legend>
+            <div data-ani="fadeOutDown" class="animated  none-stop">
+                fadeOutDown
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeOutLeft效果</legend>
+            <div data-ani="fadeOutLeft" class="animated  none-stop">
+                fadeOutLeft
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>fadeOutRight效果</legend>
+            <div data-ani="fadeOutRight" class="animated  none-stop">
+                fadeOutRight
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>bounceIn效果</legend>
+            <div data-ani="bounceIn" class="animated  none-stop">
+                bounceIn
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>bounceInUp效果</legend>
+            <div data-ani="bounceInUp" class="animated  none-stop">
+                bounceInUp
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>bounceInDown效果</legend>
+            <div data-ani="bounceInDown" class="animated  none-stop">
+                bounceInDown
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>bounceInLeft效果</legend>
+            <div data-ani="bounceInLeft" class="animated  none-stop">
+                bounceInLeft
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>bounceInRight效果</legend>
+            <div data-ani="bounceInRight" class="animated  none-stop">
+                bounceInRight
+            </div>
+        </fieldset>
+    </div>
+</body>
+</html>

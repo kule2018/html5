@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>camera示例</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <p>
+        <video id="video" autoplay="autoplay" width="320" height="320"></video>
+    </p>
+    <p id="msg"></p>
+    <script type="text/javascript">
+        var msg = document.getElementById('msg');
+
+        if (navigator.webkitGetUserMedia) { // opera should use opera.getUserMedia now, chrome use webkitGetUserMedia
+            msg.innerHTML = 'webkit';
+            navigator.webkitGetUserMedia({ video: true }, success, error);
+        }
+        else if (navigator.getUserMedia) {
+            msg.innerHTML = 'opera';
+            navigator.getUserMedia({ video: true }, success, error);
+        }
+        else {
+            msg.innerHTML = '浏览器不支持';
+        }
+
+        function success(stream) {
+            msg.innerHTML = '成功!';
+            var video = document.getElementById('video');
+            video.src = stream;
+        }
+
+        function error() {
+            msg.innerHTML = '发生错误!';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+/* Some common styles for the transition effect */
+.te-wrapper
+{
+    position: relative;
+    width: 312px;
+    height: 234px;
+}
+
+/*******************************************************/
+/****************** Cube Effects ***********************/
+/*******************************************************/
+
+.te-perspective
+{
+    -webkit-perspective: 1000;
+}
+
+.te-cover,
+.te-transition
+{
+    -webkit-transform-style: preserve-3d;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+    .te-cover.te-hide,
+    .te-transition,
+    .te-images
+    {
+        display: none;
+    }
+
+        .te-transition.te-show
+        {
+            display: block;
+        }
+
+.te-cube-face
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+}
+
+.te-back,
+.te-front
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+}
+
+.te-front
+{
+    z-index: 2;
+}
+
+.te-back
+{
+    z-index: 1;
+}
+
+    .te-cover img,
+    .te-back img,
+    .te-front img
+    {
+        width: 100%;
+        height: 100%;
+    }
+
+/***************** Cube1 ********************/
+.te-cube1 .te-cube-front
+{
+    -webkit-transform: scale3d(.895,.895,.895) translate3d(0,0,117px);
+}
+
+.te-cube1 .te-cube-top
+{
+    -webkit-transform: scale3d(.895,.895,.895) rotate3d(1,0,0,90deg) translate3d(0,0,117px);
+}
+
+.te-cube1 .te-cube-bottom
+{
+    -webkit-transform: scale3d(.895,.895,.895) rotate3d(1,0,0,-90deg) translate3d(0,0,117px);
+}
+
+.te-cube1 .te-cube-right
+{
+    -webkit-transform: scale3d(.895,.895,.895) rotate3d(0,1,0,90deg) translate3d(0,0,117px);
+}
+
+.te-cube1 .te-cube-left
+{
+    -webkit-transform: scale3d(.895,.895,.895) rotate3d(0,1,0,-90deg) translate3d(0,0,117px);
+}
+
+.te-cube1.te-show
+{
+    -webkit-animation: cube1 0.8s ease-in-out;
+}
+
+@-webkit-keyframes cube1
+{
+    0%
+    {
+        -webkit-transform: rotate3d(1,0,0,0);
+    }
+
+    40%
+    {
+        -webkit-transform: rotate3d(1,0,0,-100deg);
+    }
+
+    60%
+    {
+        -webkit-transform: rotate3d(1,0,0,-84deg);
+    }
+
+    80%
+    {
+        -webkit-transform: rotate3d(1,0,0,-90deg);
+    }
+
+    95%
+    {
+        -webkit-transform: rotate3d(1,0,0,-88deg);
+    }
+
+    100%
+    {
+        -webkit-transform: rotate3d(1,0,0,-90deg);
+    }
+}
+/***************** Cube2 ********************/
+.te-cube2 .te-cube-front
+{
+    -webkit-transform: scale3d(.895,.895,.895) translate3d(0,0,117px);
+}
+
+.te-cube2 .te-cube-bottom
+{
+    -webkit-transform: scale3d(.895,.895,.895) rotate3d(1,0,0,-90deg) translate3d(0,0,117px);
+}
+
+.te-cube2 .te-cube-top
+{
+    -webkit-transform: scale3d(.895,.895,.895) rotate3d(1,0,0,90deg) translate3d(0,0,117px);
+}
+
+.te-cube2 .te-cube-right
+{
+    -webkit-transform: scale3d(.895,.895,.895) rotate3d(0,1,0,90deg) translate3d(0,0,117px);
+}
+
+.te-cube2 .te-cube-left
+{
+    -webkit-transform: scale3d(.895,.895,.895) rotate3d(0,1,0,-90deg) translate3d(0,0,117px);
+}
+
+.te-cube2.te-show
+{
+    -webkit-animation: cube2 0.8s ease-in-out;
+}
+
+@-webkit-keyframes cube2
+{
+    0%
+    {
+        -webkit-transform: rotate3d(1,0,0,0);
+    }
+
+    40%
+    {
+        -webkit-transform: rotate3d(1,0,0,100deg);
+    }
+
+    60%
+    {
+        -webkit-transform: rotate3d(1,0,0,84deg);
+    }
+
+    80%
+    {
+        -webkit-transform: rotate3d(1,0,0,90deg);
+    }
+
+    95%
+    {
+        -webkit-transform: rotate3d(1,0,0,88deg);
+    }
+
+    100%
+    {
+        -webkit-transform: rotate3d(1,0,0,90deg);
+    }
+}
+/***************** Cube3 ********************/
+.te-cube3 .te-cube-front
+{
+    -webkit-transform: scale3d(.865,.865,.865) translate3d(0,0,156px);
+}
+
+.te-cube3 .te-cube-right
+{
+    -webkit-transform: scale3d(.865,.865,.865) rotate3d(0,1,0,90deg) translate3d(0,0,156px);
+}
+
+.te-cube3 .te-cube-left
+{
+    -webkit-transform: scale3d(.865,.865,.865) rotate3d(0,1,0,-90deg) translate3d(0,0,156px);
+}
+
+.te-cube3 .te-cube-top
+{
+    -webkit-transform: scale3d(.865,.865,.865) rotate3d(1,0,0,90deg) translate3d(0,0,156px);
+}
+
+.te-cube3 .te-cube-bottom
+{
+    -webkit-transform: scale3d(.865,.865,.865) rotate3d(0,1,0,-90deg) translate3d(0,0,156px);
+}
+
+.te-cube3.te-show
+{
+    -webkit-animation: cube3 0.8s ease-in-out;
+}
+
+@-webkit-keyframes cube3
+{
+    0%
+    {
+        -webkit-transform: rotate3d(0,1,0,0);
+    }
+
+    40%
+    {
+        -webkit-transform: rotate3d(0,1,0,-100deg);
+    }
+
+    60%
+    {
+        -webkit-transform: rotate3d(0,1,0,-84deg);
+    }
+
+    80%
+    {
+        -webkit-transform: rotate3d(0,1,0,-90deg);
+    }
+
+    95%
+    {
+        -webkit-transform: rotate3d(0,1,0,-88deg);
+    }
+
+    100%
+    {
+        -webkit-transform: rotate3d(0,1,0,-90deg);
+    }
+}
+/***************** Cube4 ********************/
+.te-cube4 .te-cube-front
+{
+    -webkit-transform: scale3d(.865,.865,.865) translate3d(0,0,156px);
+}
+
+.te-cube4 .te-cube-left
+{
+    -webkit-transform: scale3d(.865,.865,.865) rotate3d(0,1,0,-90deg) translate3d(0,0,156px);
+}
+
+.te-cube4 .te-cube-right
+{
+    -webkit-transform: scale3d(.865,.865,.865) rotate3d(0,1,0,90deg) translate3d(0,0,156px);
+}
+
+.te-cube4 .te-cube-top
+{
+    -webkit-transform: scale3d(.865,.865,.865) rotate3d(1,0,0,90deg) translate3d(0,0,156px);
+}
+
+.te-cube4 .te-cube-bottom
+{
+    -webkit-transform: scale3d(.865,.865,.865) rotate3d(0,1,0,-90deg) translate3d(0,0,156px);
+}
+
+.te-cube4.te-show
+{
+    -webkit-animation: cube4 0.8s ease-in-out;
+}
+
+@-webkit-keyframes cube4
+{
+    0%
+    {
+        -webkit-transform: rotate3d(0,1,0,0);
+    }
+
+    40%
+    {
+        -webkit-transform: rotate3d(0,1,0,100deg);
+    }
+
+    60%
+    {
+        -webkit-transform: rotate3d(0,1,0,84deg);
+    }
+
+    80%
+    {
+        -webkit-transform: rotate3d(0,1,0,90deg);
+    }
+
+    95%
+    {
+        -webkit-transform: rotate3d(0,1,0,88deg);
+    }
+
+    100%
+    {
+        -webkit-transform: rotate3d(0,1,0,90deg);
+    }
+}

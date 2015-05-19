@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>定位示例</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style type="text/css">
+        #info {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">定位示例</h2>
+    <div id="content">
+        <fieldset>
+            <legend>获取地理位置</legend>
+            <button onclick="btnClick()">点击获取位置</button>
+            <div id="info"></div>
+        </fieldset>
+    </div>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+        //全局变量
+        var info = document.getElementById('info');
+
+        //按钮点击事件
+        function btnClick() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (pos) {
+                    info.innerHTML = '成功!';
+                    var coords = pos.coords;
+                    var latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
+                    var myOpts = {
+                        zoom: 14,
+                        center: latlng,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var map = new google.maps.Map(info, myOpts);
+                    var marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map
+                    });
+                }, function (error) {
+                    info.innerHTML = '错误!';
+                    return;
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED: {
+                            info.innerHTML = "User denied the request for Geolocation."
+                            break;
+                        }
+                        case error.POSITION_UNAVAILABLE: {
+                            info.innerHTML = "Location information is unavailable."
+                            break;
+                        }
+                        case error.TIMEOUT: {
+                            info.innerHTML = "The request to get user location timed out."
+                            break;
+                        }
+                        default: {
+                            info.innerHTML = "An unknown error occurred."
+                            break;
+                        }
+                    }
+                });
+            } else {
+                info.innerHTML = '浏览器不支持!'
+            }
+        }
+    </script>
+</body>
+</html>

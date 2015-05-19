@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>sqllite</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <style type="text/css">
+        .form {
+            width: 100%;
+            min-width: 320px;
+            max-width: 480px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        #txtName, #txtMsg {
+            margin-left: 10px;
+            width: 70%;
+        }
+
+        #btnOk {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <p>
+            姓名<input type="text" id="txtName" placeholder="请输入姓名" />
+        </p>
+        <p>
+            内容<textarea id="txtMsg" placeholder="请输入留言内容"></textarea>
+        </p>
+        <div style="text-align: center;">
+            <input type="button" id="btnOk" value="提交留言" />
+        </div>
+        <div id="divMsg"></div>
+    </div>
+    <script type="text/javascript" src="http://img.gd.sohu.com/js/jq.mobi.min.js"></script>
+    <script type="text/javascript">
+        /*全局变量*/
+        var db = null;
+        $(document).ready(function () {
+            //1.初始化操作
+            db = openDatabase('MSG_DB', '1.0', '留言本信息数据库', 2 * 1024 * 1024);
+            db.transaction(function (tx) {
+                //创建表
+                var sql = 'CREATE TABLE IF NOT EXISTS TB_MSG(NAME TEXT,MSG TEXT,TIME INTEGER)';
+                tx.executeSql(sql, [], function (tx, rs) {
+                    console.log('创建表成功!');
+                    console.log(rs);
+                }, function (tx, rs) {
+                    console.log('创建表失败!');
+                    console.log(rs);
+                });
+            });
+            showMsg();
+
+            //2.绑定事件
+            $('#btnOk').bind('click', function () {
+
+            });
+        });
+
+        function exeSql(sql) {
+            var exeRs = null;
+            db.transaction(function (tx) {
+                tx.executeSql(sql, arguments, function (tx, rs) {
+                    exeRs = rs;
+                    exeRs.status = 1;
+                    return exeRs;
+                }, function (tx, rs) {
+                    exeRs = rs;
+                    exeRs.status = -1;
+                    return exeRs;
+                });
+            });
+        }
+
+        function delSql()
+    </script>
+</body>
+</html>

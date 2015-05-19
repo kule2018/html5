@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>无标题文档</title>
+    <style type="text/css">
+        #experiment
+        {
+            margin: 200px;
+            -webkit-perspective: 800;
+            -webkit-perspective-origin: 50% 200px;
+        }
+
+        #cube
+        {
+            position: relative;
+            margin: 0 auto;
+            height: 400px;
+            width: 400px;
+            -webkit-transition: -webkit-transform 1s ease-out;
+            -webkit-transform-style: preserve-3d;
+        }
+
+        .face
+        {
+            position: absolute;
+            height: 400px;
+            width: 400px;
+        }
+
+            .face img
+            {
+                width: 100%;
+                height: 100%;
+            }
+
+        #cube .one
+        {
+            -webkit-transform: rotateX(90deg) translateZ(200px);
+        }
+
+        #cube .two
+        {
+            -webkit-transform: translateZ(200px);
+        }
+
+        #cube .three
+        {
+            -webkit-transform: rotateY(90deg) translateZ(200px);
+        }
+
+        #cube .four
+        {
+            -webkit-transform: rotateY(180deg) translateZ(200px);
+        }
+
+        #cube .five
+        {
+            -webkit-transform: rotateY(-90deg) translateZ(200px);
+        }
+
+        #cube .six
+        {
+            -webkit-transform: rotateX(-90deg) translateZ(200px) rotate(180deg);
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            var xAngle = 0, yAngle = 0;
+
+            document.addEventListener('keydown', function (e) {
+                switch (e.keyCode) {
+                    case 37: // left
+                        yAngle -= 90;
+                        break;
+                    case 38: // up
+                        xAngle += 90;
+                        break;
+                    case 39: // right
+                        yAngle += 90;
+                        break;
+                    case 40: // down
+                        xAngle -= 90;
+                        break;
+                };
+                var cube = document.getElementById('cube');
+                //alert(cube);
+                cube.style.webkitTransform = "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg)";
+            }, false);
+        }
+    </script>
+</head>
+<body>
+    <div id="experiment">
+        <div id="cube">
+            <div class="face one">
+                <img src="images/1a.jpg" />
+            </div>
+            <div class="face two">
+                <img src="images/2a.jpg" />
+            </div>
+            <div class="face three">
+                <img src="images/3a.jpg" />
+            </div>
+            <div class="face four">
+                <img src="images/4a.jpg" />
+            </div>
+            <div class="face five">
+                <img src="images/5a.jpg" />
+            </div>
+            <div class="face six">
+                <img src="images/6a.jpg" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

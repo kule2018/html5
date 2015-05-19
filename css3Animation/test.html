@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>css3Test</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <style type="text/css">
+        div
+        {
+            width: 100px;
+            height: 100px;
+            background: #f00;
+            margin: 10px;
+            float: left;
+            -webkit-transition: .4s;
+        }
+        #rotate:hover
+        {
+            -webkit-transform: rotate(-45deg);
+        }
+        #scale:hover
+        {
+            -webkit-transform: scale(1.1,1.1);
+        }
+        #translate:hover
+        {
+            -webkit-transform: translate(10px,20px);
+        }
+        #skew:hover
+        {
+            -webkit-transform: skew(0deg,45deg);
+        }
+        #multi:hover
+        {
+            -webkit-transform: translate(10px, 25px) rotate(45deg) scale(2, 1);
+        }
+        #origin:hover
+        {
+            -webkit-transform-origin: 0 0;
+            -webkit-transform: rotate(-45deg);
+        }
+        #animate
+        {
+            width: 600px;
+            height: 400px; /* 确保我们是在一个 3-D 空间 */
+            -webkit-transform-style: preserve-3d; /*让整个行使用x-轴旋转、7秒中的动画、无限次播放以及线性 */
+            -webkit-animation-name: x-spin;
+            -webkit-animation-duration: 7s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-timing-function: linear;
+        }
+        /* 定义要调用的动画 */
+        @-webkit-keyframes x-spin { 
+	        0% { -webkit-transform: rotateX(0deg); } 
+	        50% { -webkit-transform: rotateX(180deg); }
+	        100% { -webkit-transform: rotateX(360deg); } 
+        }        
+        #spin
+        {
+            -webkit-transform: rotate(360deg);
+            -webkit-animation-name: spin;
+            -webkit-animation-duration: 1s;
+            -webkit-animation-iteration-count: infinite;
+        }
+        @-webkit-keyframes spin {
+	        from {-webkit-transform: rotate(0deg);}
+  	        to {-webkit-transform: rotate(360deg);}
+        }
+    </style>
+</head>
+<body>
+    <div id="rotate">
+    </div>
+    <div id="scale">
+    </div>
+    <div id="translate">
+    </div>
+    <div id="skew">
+    </div>
+    <div id="multi">
+    </div>
+    <div id="origin">
+    </div>
+    <div id="animate">
+    </div>
+    <div id="span"></div>
+</body>
+</html>

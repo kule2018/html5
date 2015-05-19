@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>动画(cube)切换示例</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style type="text/css">
+        #te-wrapper
+        {
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">动画(cube)切换示例</h2>
+    <div id="content">
+        <fieldset class="form">
+            <legend>动画(cube)切换示例</legend>
+            <p>请用手指或鼠标在图片中上下左右滑动</p>
+            <div class="te-wrapper" id="te-wrapper">
+            </div>
+        </fieldset>
+    </div>
+    <script type="text/javascript" src="http://img.gd.sohu.com/js/jqmobi/jq.js"></script>
+    <script type="text/javascript" src="http://img.gd.sohu.com/js/jqmobi/jq.desktopBrowsers.js"></script>
+    <!--transition-->
+    <script type="text/javascript" src="transition/jq.swipe.js"></script>
+    <script type="text/javascript" src="transition/jq.transition.js"></script>
+    <link rel="stylesheet" href="transition/jq.transition.cube.css" />
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            $('#te-wrapper').transition({
+                imgSrcs: [
+                    'images/1.jpg',
+                    'images/2.jpg',
+                    'images/3.jpg',
+                    'images/4.jpg',
+                    'images/5.jpg',
+                    'images/6.jpg'
+                ]
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>重力感应示例</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style type="text/css">
+        #container
+        {
+            background: #ccc;
+            margin: 0 auto;
+            width: 290px;
+            height: 290px;
+            position: relative;
+        }
+
+        #pointer
+        {
+            height: 5px;
+            width: 5px;
+            background: #f00;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">重力感应示例</h2>
+    <div id="content">
+        <fieldset class="form">
+            <legend>重力感应示例</legend>
+            <div id="container" style="">
+                <div id="pointer">
+                </div>
+            </div>
+            <div id="msg"></div>
+        </fieldset>
+    </div>
+    <script type="text/javascript">
+        var lastFB;
+        var lastLR;
+        var msg = document.getElementById('msg');
+
+        var container = document.getElementById('container');
+        var cw = container.clientWidth / 2;
+        var ch = container.clientHeight / 2;
+
+        window.addEventListener('deviceorientation', function (e) {
+            //前后倾斜度
+            var front_back;
+            //左右倾斜度;
+            var left_right;
+            //手机头部指向(用处不大)
+            var phoneDirection = e.alpha;
+            //获取设备方向
+            var o = window.orientation;
+            if (o == 0) {//设备纵向
+                front_back = e.beta;
+                left_right = e.gamma;
+            }
+            else if (o == 90) {//设备横向1
+                front_back = -e.gamma;
+                left_right = e.beta;
+            }
+            else if (o == -90) {//设备横向2
+                front_back = e.gamma;
+                left_right = -e.beta;
+            }
+
+            if (lastFB != front_back || lastLR != left_right) {
+                var style = document.getElementById("pointer").style;
+                style.left = left_right / 90 * cw + cw + "px";
+                style.top = front_back / 90 * ch + ch + "px";
+
+                lastFB = front_back;
+                lastLR = left_right;
+                msg.innerHTML = "前后倾斜度(前负后正): " + front_back.toFixed(2) + "<br/>左右倾斜度(左负右正): " + left_right.toFixed(2) + "<br/>手机头部指向(0-360度): " + (phoneDirection != null ? phoneDirection.toFixed(2) : 0);
+            }
+        }, false);
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>toDataURL示例</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <button id="btn">点击</button>
+    <script type="text/javascript">
+        (function () {
+
+            var btnEl = document.getElementById('btn'),
+                canvasEl = document.getElementById('canvas'),
+                context = canvasEl.getContext('2d');
+
+            //解决retina屏幕下,canvas模糊的问题
+            canvasEl.width = 600;
+            canvasEl.height = 600;
+            canvasEl.style.width = '300px';
+            canvasEl.style.height = '300px';
+
+
+            var img = document.createElement('img');
+            img.onload = function () {
+                context.drawImage(img, 50, 50);
+            };
+            img.crossOrigin = '';
+            img.src = 'http://img.gd.sohu.com/public/images/2014-08-18/9/53f195be070c6-thumb.jpg';
+
+
+            btnEl.addEventListener('click', function () {
+                var data = canvasEl.toDataURL('image/png');
+                console.log(data);
+                location.href = data;
+            }, false);
+
+        })();
+    </script>
+</body>
+</html>

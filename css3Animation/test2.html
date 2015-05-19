@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>css3Test</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <style type="text/css">
+        div {
+            width: 100px;
+            height: 100px;
+            margin: 30px;
+            float: left;
+            background: #00f;
+        }
+
+        .flash {
+            -webkit-animation: flash;
+            -webkit-animation-duration: 2s;
+            -webkit-animation-iteration-count: infinite;
+        }
+
+        @-webkit-keyframes flash {
+            0%, 50%, 100% {
+                opacity: 1;
+            }
+
+            25%, 75% {
+                opacity: 0;
+            }
+        }
+
+        .shake {
+            -webkit-animation: shake;
+            -webkit-animation-duration: 2s;
+            -webkit-animation-iteration-count: infinite;
+        }
+
+        @-webkit-keyframes shake {
+            10%, 30%, 50%, 70%, 90% {
+                -webkit-transform: translateX(-10px);
+            }
+
+            0%, 20%, 40%, 60%, 80%, 100% {
+                -webkit-transform: translateX(10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="flash">
+    </div>
+    <div class="shake">
+    </div>
+</body>
+</html>

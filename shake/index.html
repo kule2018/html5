@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>摇一摇示例</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style type="text/css">
+        .imgShower {
+            text-align: center;
+        }
+
+            .imgShower img {
+                width: 100%;
+            }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">摇一摇示例</h2>
+    <div id="content">
+        <fieldset class="form">
+            <legend>摇一摇更换图片</legend>
+            <button onclick="shaked()">手动触发摇一摇</button>
+            <div class="imgShower">
+                <img id="img" src="images/1a.jpg" />
+            </div>
+            <div id="msg"></div>
+        </fieldset>
+    </div>
+    <audio id="audio" src="audio/song.mp3">
+    </audio>
+    <script type="text/javascript">
+        //全局变量
+        var msg = document.getElementById('msg');
+        var i = 0;
+
+        //摇动相关参数
+        var shakeThreshold = 5000;
+        var lastUpdateTime = 0;
+        var x, y, z, lastX = 0, lastY = 0, lastZ = 0;
+
+        //摇动处理函数
+        function shakeHandler(evt) {
+            var acceleration = evt.accelerationIncludingGravity;
+            var currentTime = new Date().getTime();
+            if ((currentTime - lastUpdateTime) > 10) {
+                var timeSpan = currentTime - lastUpdateTime;
+                lastUpdateTime = currentTime;
+                x = acceleration.x;
+                y = acceleration.y;
+                z = acceleration.z;
+                var shakeSpeed = Math.abs(x + y + z - lastX - lastY - lastZ) / timeSpan * 10000;
+                if (shakeSpeed > shakeThreshold) {
+                    shaked();
+                }
+                lastX = x;
+                lastY = y;
+                lastZ = z;
+            }
+        }
+        if (window.DeviceMotionEvent) {
+            window.addEventListener('devicemotion', shakeHandler, false);
+        } else {
+            msg.innerHTML = '浏览器不支持摇一摇!'
+        }
+
+        //摇一摇触发函数
+        var index = 1;
+        function shaked() {
+            //音频
+            var audio = document.getElementById('audio');
+            var src = audio.src;
+            audio.src = '';
+            audio.src = src;
+            audio.play();
+
+            //图片
+            var imgs = ['1a', '2a', '3a', '4a', '5a'];
+            var src = 'images/' + imgs[index] + '.jpg';
+            var img = document.getElementById('img');
+            img.src = src;
+            if (index++ == 4) {
+                index = 0;
+            }
+        }
+    </script>
+</body>
+</html>

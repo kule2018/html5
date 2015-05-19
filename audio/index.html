@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>音频示例</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style type="text/css">
+       
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">音频示例</h2>
+    <div id="content">
+        <fieldset class="form">
+            <legend>音频示例</legend>
+            <table>
+                <tr>
+                    <td style="width: 50%;">属性</td>
+                    <td>控制</td>
+                </tr>
+                <tr>
+                    <td>当前歌曲</td>
+                    <td id="currentSong"></td>
+                </tr>
+                <tr>
+                    <td>播放/暂停(paused)</td>
+                    <td>
+                        <button id="btnPlayPause">播放</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>下一曲</td>
+                    <td>
+                        <button id="btnNext">下一曲</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>音量</td>
+                    <td>
+                        <input type="range" id="rangeVol" min="0" max="100" value="100" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <audio id="audio">
+    </audio>
+    <script type="text/javascript">
+        /*
+        *   音频的事件类型
+        *   var events = 'abort,canplay,canplaythrough,durationchange,emptied,ended,error,loadeddata,loadedmetadata,loadstart,pause,play,playing,progress,ratechange,seeked,seeking,stalled,suspend,timeupdate,volumechange,waiting'.split(',');
+        */
+
+        //全局变量
+        //播放列表
+        var audioSrcs = ['audio1/0.mp3', 'audio1/1.mp3', 'audio1/2.mp3', 'audio1/3.mp3', 'audio1/4.mp3', 'audio1/5.mp3'];
+        //播放索引
+        var index = 0;
+        //音频元素
+        var audio = document.getElementById('audio');
+        //音频是否暂停
+        var paused = true;
+        //当前歌曲
+        var currentSong = document.getElementById('currentSong');
+
+        //初始化操作
+        audio.src = currentSong.innerHTML = audioSrcs[index];
+
+
+        //音频的播放暂停事件
+        audio.addEventListener('play', function () {
+            paused = false;
+            btnPlayPause.innerText = '暂停';
+        });
+        audio.addEventListener('pause', function () {
+            paused = true;
+            btnPlayPause.innerText = '播放';
+        });
+        audio.addEventListener('ended', function () {
+            paused = false;
+            btnNext.click();
+        });
+
+        //播放暂停
+        var btnPlayPause = document.getElementById('btnPlayPause');
+        btnPlayPause.addEventListener('click', function () {
+            if (paused) {
+                audio.play();
+            }
+            else {
+                audio.pause();
+            }
+        });
+
+        //下一曲
+        var btnNext = document.getElementById('btnNext');
+        btnNext.addEventListener('click', function () {
+            if (index++ == 5) {
+                index = 0;
+            }
+            audio.src = currentSong.innerHTML = audioSrcs[index];
+            if (!paused) {
+                audio.play();
+            }
+        });
+
+        //音量控制
+        var rangeVol = document.getElementById('rangeVol');
+        rangeVol.addEventListener('change', function () {
+            audio.volume = parseFloat(rangeVol.value / 100);
+        });
+    </script>
+</body>
+</html>

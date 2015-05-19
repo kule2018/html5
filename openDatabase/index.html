@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>WEB SQL示例</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style type="text/css">
+        #txtName, #txtMsg {
+            margin-left: 10px;
+            width: 70%;
+        }
+
+        #btnOk {
+            padding: 5px 10px;
+        }
+
+        .msgItem {
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+        }
+
+            .msgItem span {
+                float: right;
+            }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">WEB SQL示例</h2>
+    <div id="content">
+        <fieldset class="form">
+            <legend>填写留言内容</legend>
+            <p>
+                姓名<input type="text" id="txtName" placeholder="请输入姓名" value="宋均均" />
+            </p>
+            <p>
+                内容<textarea id="txtMsg" placeholder="请输入留言内容" rows="4">留言内容</textarea>
+            </p>
+            <div style="text-align: center;">
+                <input type="button" id="btnOk" value="提交留言" />
+            </div>
+        </fieldset>
+        <fieldset class="form">
+            <legend>留言内容</legend>
+            <table>
+                <thead>
+                    <tr>
+                        <td>姓名</td>
+                        <td>内容</td>
+                        <td>时间</td>
+                        <td>操作</td>
+                    </tr>
+                </thead>
+                <tbody id="msgShower"></tbody>
+            </table>
+        </fieldset>
+    </div>
+    <script type="text/javascript" src="http://img.gd.sohu.com/js/jqmobi/jq.js"></script>
+    <script type="text/javascript">
+        /*全局变量*/
+        var db = null;
+        var dbVersion = '2.0';
+
+        /*文档加载后完成*/
+        $(document).ready(function () {
+            //1.初始化操作
+            db = window.openDatabase('MSG_DB', '', '留言本信息数据库', 2 * 1024 * 1024);
+            if (dbVersion != db.version) {
+                exeSql('DROP TABLE TB_MSG');
+            }
+            //1.1创建表
+            var sql = 'CREATE TABLE IF NOT EXISTS TB_MSG(ID INTEGER PRIMARY KEY ASC,NAME TEXT,MSG TEXT,TIME INTEGER)';
+            exeSql(sql, [], showMsg);
+
+            //2.绑定事件
+            //2.1提交留言按钮
+            $('#btnOk').bind('click', function () {
+                var name = $('#txtName').val();
+                var msg = $('#txtMsg').val();
+                if (!name || !msg) {
+                    return;
+                }
+                var sql = 'INSERT INTO TB_MSG (NAME,MSG,TIME) VALUES(?,?,?)';
+                var args = [name, msg, new Date().format('yyyy-MM-dd hh:mm:ss')];
+                exeSql(sql, args, showMsg);
+            });
+            //2.2删除留言按钮
+            $('#msgShower').on('click', '.delRow', function () {
+                if (confirm('确定删除该条数据?')) {
+                    var $this = $(this);
+                    var id = $this.attr('data-id');
+                    var sql = 'DELETE FROM TB_MSG WHERE ID=?';
+                    exeSql(sql, [id], showMsg);
+                }
+            });
+        });
+
+        /*sql执行*/
+        function exeSql(sql, args, success, error) {
+            var exeRs = null;
+            args = args || [];
+            db.transaction(function (tx) {
+                tx.executeSql(
+                    sql,
+                    args,
+                    function (tx, rs) {
+                        if (success instanceof Function) {
+                            success.call(this, rs, tx);
+                        }
+                    },
+                    function (tx, rs) {
+                        console.log('SQLite操作失败!' + rs.message);
+                        if (error instanceof Function) {
+                            error.call(this, rs, tx);
+                        }
+                    }
+                );
+            });
+        }
+
+        /*显示留言数据*/
+        function showMsg() {
+            var sql = 'SELECT * FROM TB_MSG ORDER BY TIME DESC';
+            exeSql(sql, [], function (rs) {
+                var rows = rs.rows;
+                var html = '';
+                for (var i = 0, len = rows.length; i < len; i++) {
+                    var row = rows.item(i);
+                    html += '<tr><td>' + row.NAME + '</td><td> ' + row.MSG + '</td><td>' + row.TIME + '</td><td><a data-id="' + row.ID + '" href="javascript:;" class="delRow">删除</a></td></tr>';
+                }
+                $('#msgShower').html(html || '<tr><td colspan="4">没有数据</td></tr>');
+            });
+        }
+
+        //日期格式化
+        Date.prototype.format = function (format) {
+            var o = {
+                "M+": this.getMonth() + 1, //month
+                "d+": this.getDate(),    //day
+                "h+": this.getHours(),   //hour
+                "m+": this.getMinutes(), //minute
+                "s+": this.getSeconds(), //second
+                "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+                "S": this.getMilliseconds() //millisecond
+            }
+            if (/(y+)/.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            }
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+                }
+            }
+            return format;
+        }
+    </script>
+</body>
+</html>
