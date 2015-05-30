@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>requestAnimationFrame示例</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+    <div id="div" style="width:0; height:20px; background: #0f0;"></div>
+    <button id="btn">点击</button>
+    <!--<script type="text/javascript" src="http://img.gd.sohu.com/js/jqmobi/jq.js"></script>-->
+    <script type="text/javascript">
+        var divEl = document.getElementById('div'),
+                btnEl = document.getElementById('btn');
+
+        var progress = 0;
+        function step() {
+            progress++;
+            divEl.textContent = progress + '%';
+            divEl.style.width = progress + '%';
+            if (progress < 100) {
+                requestAnimationFrame(step);
+            }
+        }
+
+        btnEl.addEventListener('click', function () {
+            progress = 0;
+            divEl.style.width = 0;
+            requestAnimationFrame(function () {
+                requestAnimationFrame(step);
+            });
+        }, false);
+    </script>
+</body>
+</html>
