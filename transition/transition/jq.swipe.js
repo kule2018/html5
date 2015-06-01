@@ -1,15 +1,14 @@
 /**
  * $().swipe - a library to detect swipe events for jqMobi apps
- * Copyright 2011 - Intel 
+ * Copyright 2011 - Intel
  * Executes a callback function and passes in the direction return
  * @string (left,right,up,down)
- */ 
-(function($) {
+ */
+(function ($) {
     var cache = [];
-    $.fn["swipeListener"] = function(opts) {
-        
-        if (opts === undefined && this.length > 0) 
-        {
+    $.fn["swipeListener"] = function (opts) {
+
+        if (opts === undefined && this.length > 0) {
             return cache[this[0].id] ? cache[this[0].id] : null;
         }
         for (var i = 0; i < this.length; i++) {
@@ -19,8 +18,8 @@
         }
         return this.length == 1 ? tmp : this;
     };
-    var swipeListener = (function() {
-        var swipeListener = function(elID, opts) {
+    var swipeListener = (function () {
+        var swipeListener = function (elID, opts) {
             var that = this;
             if (typeof (elID) == "string")
                 this.el = document.getElementById(elID);
@@ -30,17 +29,17 @@
                 alert("Error adding swipe listener for " + elID);
                 return;
             }
-            this.el.addEventListener('touchmove', function(e) {
+            this.el.addEventListener('touchmove', function (e) {
                 that.touchMove(e);
             }, false);
-            this.el.addEventListener('touchend', function(e) {
+            this.el.addEventListener('touchend', function (e) {
                 that.touchEnd(e);
             }, false);
             for (j in opts) {
                 this[j] = opts[j];
             }
         };
-        
+
         swipeListener.prototype = {
             startX: 0,
             startY: 0,
@@ -56,8 +55,8 @@
                 right: false
             },
             callBack: null,
-            
-            cancel: function() {
+
+            cancel: function () {
                 this.startX = 0;
                 this.startY = 0;
                 this.movingX = 0;
@@ -70,7 +69,7 @@
                     right: false
                 };
             },
-            touchStart: function(event) {
+            touchStart: function (event) {
                 if (event.touches[0].target && event.touches[0].target.type != undefined) {
                     return;
                 }
@@ -81,7 +80,7 @@
                     event.preventDefault();
                 }
             },
-            touchMove: function(event) {
+            touchMove: function (event) {
                 if (this.movingElement == false)
                     this.touchStart(event);
                 event.preventDefault();
@@ -92,7 +91,7 @@
                 this.movingX = event.touches[0].pageX - this.startX;
                 this.movingY = event.touches[0].pageY - this.startY;
             },
-            touchEnd: function(event) {
+            touchEnd: function (event) {
                 if (!this.movingElement)
                     return;
                 event.preventDefault();
@@ -109,7 +108,7 @@
                 }
                 if (swiped && typeof (this.callBack == "function"))
                     this.callBack(this.swipeDirection);
-                
+
                 this.cancel();
             }
         };
@@ -117,5 +116,5 @@
     })();
 
     // Helper function to get only
-   
-})(jq);
+
+})($);
