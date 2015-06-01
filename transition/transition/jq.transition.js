@@ -131,7 +131,6 @@
                         }
 
                         backImg = currentImg = imgSrcs[currentIndex];
-                        ;
                         frontImg = currentIndex == imgCount - 1 ? imgSrcs[0] : imgSrcs[currentIndex + 1];
                     }
 
