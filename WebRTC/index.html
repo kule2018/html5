@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>camera示例</title>
+    <title>WebRTC示例</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
     <meta name="apple-touch-fullscreen" content="yes" />
@@ -11,33 +11,15 @@
 </head>
 <body>
     <p>
-        <video id="video" autoplay="autoplay" width="320" height="320"></video>
+        Local: <br>
+        <video id="localVideo" autoplay></video>
+        <br>
+        Remote: <br>
+        <video id="remoteVideo" autoplay></video>
     </p>
     <p id="msg"></p>
+    <script type="text/javascript" src="WebRTC.js"></script>
     <script type="text/javascript">
-        var msg = document.getElementById('msg');
-
-        if (navigator.webkitGetUserMedia) { // opera should use opera.getUserMedia now, chrome use webkitGetUserMedia
-            msg.innerHTML = 'webkit';
-            navigator.webkitGetUserMedia({ video: true }, success, error);
-        }
-        else if (navigator.getUserMedia) {
-            msg.innerHTML = 'opera';
-            navigator.getUserMedia({ video: true }, success, error);
-        }
-        else {
-            msg.innerHTML = '浏览器不支持';
-        }
-
-        function success(stream) {
-            msg.innerHTML = '成功!';
-            var video = document.getElementById('video');
-            video.src = stream;
-        }
-
-        function error() {
-            msg.innerHTML = '发生错误!';
-        }
     </script>
 </body>
 </html>
