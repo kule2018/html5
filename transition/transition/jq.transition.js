@@ -83,16 +83,13 @@
                         }
                     });
 
-                    $teWrapper.on({
-                        'webkitAnimationStart': function (e) {
-                            isAnimating = true;
-                        },
-                        'webkitAnimationEnd': function (e) {
-                            $teCover.removeClass('te-hide');
-                            $teWrapper.removeClass('te-perspective');
-                            $teTransition.removeClass('te-show');
-                            isAnimating = false;
-                        }
+                    $teWrapper.on('webkitAnimationStart', function (e) {
+                        isAnimating = true;
+                    }).on('webkitAnimationEnd', function (e) {
+                        $teCover.removeClass('te-hide');
+                        $teWrapper.removeClass('te-perspective');
+                        $teTransition.removeClass('te-show');
+                        isAnimating = false;
                     });
 
                 },
@@ -122,7 +119,6 @@
                         }
 
                         backImg = currentImg = imgSrcs[currentIndex];
-                        ;
                         frontImg = currentIndex == 0 ? imgSrcs[imgCount - 1] : imgSrcs[currentIndex - 1];
                     }
                     else if (flag === -1) {
