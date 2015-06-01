@@ -130,8 +130,8 @@
                         frontImg = currentIndex == imgCount - 1 ? imgSrcs[0] : imgSrcs[currentIndex + 1];
                     }
 
-                    $back.empty().append('<img src="' + backImg + '">');
-                    $front.empty().append('<img src="' + frontImg + '">');
+                    $back.html('<img src="' + backImg + '"/>');
+                    $front.html('<img src="' + frontImg + '"/>');
 
                     $teCover.find('img').attr('src', currentImg);
 
