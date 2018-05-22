@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>IndexedDB示例</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
@@ -8,228 +8,228 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="stylesheet" href="../css/style.css" />
     <style type="text/css">
-        #txtName, #txtMsg, #txtEmail {
-            margin-left: 10px;
-            width: 70%;
-        }
+      #txtName, #txtMsg, #txtEmail {
+        margin-left: 10px;
+        width: 70%;
+      }
 
-        #btnOk {
-            padding: 5px 10px;
-        }
+      #btnOk {
+        padding: 5px 10px;
+      }
 
-        .msgItem {
-            border: 1px solid #ccc;
-            margin-bottom: 5px;
-        }
+      .msgItem {
+        border: 1px solid #ccc;
+        margin-bottom: 5px;
+      }
 
-            .msgItem span {
-                float: right;
-            }
+      .msgItem span {
+        float: right;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h2 style="text-align: center;">IndexedDB示例</h2>
     <div id="content">
-        <fieldset class="form">
-            <legend>填写留言内容</legend>
-            <p>
-                姓名<input type="text" id="txtName" placeholder="请输入姓名" value="宋均均" />
-            </p>
-            <p>
-                内容<textarea id="txtMsg" placeholder="请输入留言内容" rows="4">留言内容</textarea>
-            </p>
-            <p>
-                邮箱<input type="text" id="txtEmail" placeholder="请输入邮箱" value="250084439@qq.com" />
-            </p>
-            <div style="text-align: center;">
-                <input type="button" id="btnOk" value="提交留言" />
-            </div>
-        </fieldset>
-        <fieldset class="form">
-            <legend>留言内容</legend>
-            <table>
-                <thead>
-                    <tr>
-                        <td>姓名</td>
-                        <td>内容</td>
-                        <td>邮箱</td>
-                        <td>时间</td>
-                        <td>操作</td>
-                    </tr>
-                </thead>
-                <tbody id="msgShower"></tbody>
-            </table>
-        </fieldset>
+      <fieldset class="form">
+        <legend>填写留言内容</legend>
+        <p>
+          姓名<input type="text" id="txtName" placeholder="请输入姓名" value="宋均均" />
+        </p>
+        <p>
+          内容<textarea id="txtMsg" placeholder="请输入留言内容" rows="4">留言内容</textarea>
+        </p>
+        <p>
+          邮箱<input type="text" id="txtEmail" placeholder="请输入邮箱" value="250084439@qq.com" />
+        </p>
+        <div style="text-align: center;">
+          <input type="button" id="btnOk" value="提交留言" />
+        </div>
+      </fieldset>
+      <fieldset class="form">
+        <legend>留言内容</legend>
+        <table>
+          <thead>
+            <tr>
+              <td>姓名</td>
+              <td>内容</td>
+              <td>邮箱</td>
+              <td>时间</td>
+              <td>操作</td>
+            </tr>
+          </thead>
+          <tbody id="msgShower"></tbody>
+        </table>
+      </fieldset>
     </div>
     <script type="text/javascript" src="http://img.gd.sohu.com/js/jqmobi/jq.js"></script>
     <script type="text/javascript">
-        /*全局变量*/
-        var db = null;
-        var dbName = 'MSG_DB';
-        var dbVersion = '4.0';
-        var storeName = 'MSG_STORE';
+      /*全局变量*/
+      var db = null;
+      var dbName = 'MSG_DB';
+      var dbVersion = '4.0';
+      var storeName = 'MSG_STORE';
 
-        /*加载完成事件*/
-        $(document).ready(function () {
-            //1.初始化操作
-            window.indexedDB = window.indexedDB || window.webkitIndexedDB || window.msIndexedDB || window.mozIndexedDB;
-            window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIndexedDB || window.mozIDBTransaction;
-            window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIndexedDB || window.mozIDBKeyRange;
-            var request = indexedDB.open(dbName, dbVersion);
-            request.onsuccess = function (evt) {
-                db = this.result;
-                //显示所有数据
-                showMsgData();
-                /*if (db.version != dbVersion) {
-                    var setVersionRequest = db.setVersion(dbVersion);
-                    setVersionRequest.onsuccess = createObjectStore;
-                }*///旧版indexedDB规范中的版本更改方式
-            };
-            request.onupgradeneeded = function (evt) {
-                db = this.result;
-                createObjectStore();
-            }
-            request.onerror = function (evt) {
-                console.log('IndexedDB操作失败!');
-                console.log(evt);
-            };
+      /*加载完成事件*/
+      $(document).ready(function() {
+        //1.初始化操作
+        window.indexedDB = window.indexedDB || window.webkitIndexedDB || window.msIndexedDB || window.mozIndexedDB;
+        window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIndexedDB || window.mozIDBTransaction;
+        window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIndexedDB || window.mozIDBKeyRange;
+        var request = indexedDB.open(dbName, dbVersion);
+        request.onsuccess = function(evt) {
+          db = this.result;
+          //显示所有数据
+          showMsgData();
+          /*if (db.version != dbVersion) {
+              var setVersionRequest = db.setVersion(dbVersion);
+              setVersionRequest.onsuccess = createObjectStore;
+          }*///旧版indexedDB规范中的版本更改方式
+        };
+        request.onupgradeneeded = function(evt) {
+          db = this.result;
+          createObjectStore();
+        };
+        request.onerror = function(evt) {
+          console.log('IndexedDB操作失败!');
+          console.log(evt);
+        };
 
-            //2.绑定事件
-            //2.1提交留言按钮
-            $('#btnOk').bind('click', function () {
-                var name = $('#txtName').val();
-                var msg = $('#txtMsg').val();
-                var email = $('#txtEmail').val();
-                if (!name || !msg || !email) {
-                    return;
-                }
-                var date = new Date();
-                var dataObj = {
-                    ID: date.valueOf(),
-                    NAME: name,
-                    MSG: msg,
-                    EMAIL: email,
-                    TIME: date.format('yyyy-MM-dd hh:mm:ss')
-                };
-                addData(dataObj, showMsgData, function () {
-                    alert('邮箱已存在!');
-                });
-            });
-            //2.2删除留言按钮
-            $('#msgShower').on('click', '.delRow', function () {
-                if (confirm('确定删除该条数据?')) {
-                    var $this = $(this);
-                    var id = $this.attr('data-id');
-                    deleteData(id, showMsgData);
-                }
-            });
+        //2.绑定事件
+        //2.1提交留言按钮
+        $('#btnOk').bind('click', function() {
+          var name = $('#txtName').val();
+          var msg = $('#txtMsg').val();
+          var email = $('#txtEmail').val();
+          if (!name || !msg || !email) {
+            return;
+          }
+          var date = new Date();
+          var dataObj = {
+            ID: date.valueOf(),
+            NAME: name,
+            MSG: msg,
+            EMAIL: email,
+            TIME: date.format('yyyy-MM-dd hh:mm:ss'),
+          };
+          addData(dataObj, showMsgData, function() {
+            alert('邮箱已存在!');
+          });
         });
+        //2.2删除留言按钮
+        $('#msgShower').on('click', '.delRow', function() {
+          if (confirm('确定删除该条数据?')) {
+            var $this = $(this);
+            var id = $this.attr('data-id');
+            deleteData(id, showMsgData);
+          }
+        });
+      });
 
-        /*创建objectStore*/
-        function createObjectStore() {
-            if (db.objectStoreNames.contains(storeName)) {
-                db.deleteObjectStore(storeName);
-            }
-            var objectStore = db.createObjectStore(storeName, {
-                keyPath: 'ID',
-                autoIncrement: false
-            });
-            objectStore.createIndex('NAME', 'NAME', {
-                unique: false
-            });
-            objectStore.createIndex('MSG', 'MSG', {
-                unique: false
-            });
-            objectStore.createIndex('EMAIL', 'EMAIL', {
-                unique: true
-            });
-            objectStore.createIndex('TIME', 'TIME', {
-                unique: false
-            });
+      /*创建objectStore*/
+      function createObjectStore() {
+        if (db.objectStoreNames.contains(storeName)) {
+          db.deleteObjectStore(storeName);
         }
+        var objectStore = db.createObjectStore(storeName, {
+          keyPath: 'ID',
+          autoIncrement: false,
+        });
+        objectStore.createIndex('NAME', 'NAME', {
+          unique: false,
+        });
+        objectStore.createIndex('MSG', 'MSG', {
+          unique: false,
+        });
+        objectStore.createIndex('EMAIL', 'EMAIL', {
+          unique: true,
+        });
+        objectStore.createIndex('TIME', 'TIME', {
+          unique: false,
+        });
+      }
 
-        /*获取objectStore*/
-        function getObjectStore() {
-            var transation = db.transaction(storeName, IDBTransaction.READ_WRITE);
-            var objectStore = transation.objectStore(storeName);
-            return objectStore;
-        }
+      /*获取objectStore*/
+      function getObjectStore() {
+        var transation = db.transaction(storeName, 'readwrite');
+        var objectStore = transation.objectStore(storeName);
+        return objectStore;
+      }
 
-        /*添加数据*/
-        function addData(dataObj, success, error) {
-            var objcetStore = getObjectStore();
-            var addRequst = objcetStore.add(dataObj);
-            addRequst.onsuccess = function (evt) {
-                if (success instanceof Function) {
-                    success.call(this, evt);
-                }
-            };
-            addRequst.onerror = function (evt) {
-                console.log('IndexedDB添加数据失败!');
-                console.log(evt);
-                if (error instanceof Function) {
-                    error.call(this, evt);
-                }
-            };
-        }
+      /*添加数据*/
+      function addData(dataObj, success, error) {
+        var objcetStore = getObjectStore();
+        var addRequst = objcetStore.add(dataObj);
+        addRequst.onsuccess = function(evt) {
+          if (success instanceof Function) {
+            success.call(this, evt);
+          }
+        };
+        addRequst.onerror = function(evt) {
+          console.log('IndexedDB添加数据失败!');
+          console.log(evt);
+          if (error instanceof Function) {
+            error.call(this, evt);
+          }
+        };
+      }
 
-        /*删除数据*/
-        function deleteData(id, success, error) {
-            var objectStore = getObjectStore();
-            var deleteRequst = typeof id == 'string' ? objectStore.delete(parseInt(id)) : objectStore.clear();//如果不传id,表示消除数据
-            deleteRequst.onsuccess = function (evt) {
-                if (success instanceof Function) {
-                    success.call(this, evt);
-                }
-            };
-            deleteRequst.onerror = function (evt) {
-                console.log('IndexedDB删除数据失败!');
-                console.log(evt);
-                if (error instanceof Function) {
-                    error.call(this, evt);
-                }
-            };
-        }
+      /*删除数据*/
+      function deleteData(id, success, error) {
+        var objectStore = getObjectStore();
+        var deleteRequst = typeof id == 'string' ? objectStore.delete(parseInt(id)) : objectStore.clear();//如果不传id,表示消除数据
+        deleteRequst.onsuccess = function(evt) {
+          if (success instanceof Function) {
+            success.call(this, evt);
+          }
+        };
+        deleteRequst.onerror = function(evt) {
+          console.log('IndexedDB删除数据失败!');
+          console.log(evt);
+          if (error instanceof Function) {
+            error.call(this, evt);
+          }
+        };
+      }
 
-        /*显示留言数据*/
-        function showMsgData() {
-            var objectStore = getObjectStore();
-            var requst = objectStore.openCursor();
-            var html = '';
-            requst.onsuccess = function (evt) {//有n条记录,该函数会执行n+1次
-                var curor = evt.target.result;
-                if (curor) {
-                    var msgItem = curor.value;
-                    html += '<tr><td>' + msgItem.NAME + '</td><td> ' + msgItem.MSG + '</td><td>' + msgItem.EMAIL + '</td><td>' + msgItem.TIME + '</td><td><a data-id="' + msgItem.ID + '" href="javascript:;" class="delRow">删除</a></td></tr>';
-                    curor.continue();
-                }
-                else {
-                    $('#msgShower').html(html || '<tr><td colspan="5">没有数据</td></tr>');
-                }
-            };
-        }
+      /*显示留言数据*/
+      function showMsgData() {
+        var objectStore = getObjectStore();
+        var requst = objectStore.openCursor();
+        var html = '';
+        requst.onsuccess = function(evt) {//有n条记录,该函数会执行n+1次
+          var curor = evt.target.result;
+          if (curor) {
+            var msgItem = curor.value;
+            html += '<tr><td>' + msgItem.NAME + '</td><td> ' + msgItem.MSG + '</td><td>' + msgItem.EMAIL + '</td><td>' + msgItem.TIME + '</td><td><a data-id="' + msgItem.ID + '" href="javascript:;" class="delRow">删除</a></td></tr>';
+            curor.continue();
+          }
+          else {
+            $('#msgShower').html(html || '<tr><td colspan="5">没有数据</td></tr>');
+          }
+        };
+      }
 
-        /*日期格式化*/
-        Date.prototype.format = function (format) {
-            var o = {
-                "M+": this.getMonth() + 1, //month
-                "d+": this.getDate(),    //day
-                "h+": this.getHours(),   //hour
-                "m+": this.getMinutes(), //minute
-                "s+": this.getSeconds(), //second
-                "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
-                "S": this.getMilliseconds() //millisecond
-            }
-            if (/(y+)/.test(format)) {
-                format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            }
-            for (var k in o) {
-                if (new RegExp("(" + k + ")").test(format)) {
-                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
-                }
-            }
-            return format;
+      /*日期格式化*/
+      Date.prototype.format = function(format) {
+        var o = {
+          'M+': this.getMonth() + 1, //month
+          'd+': this.getDate(),    //day
+          'h+': this.getHours(),   //hour
+          'm+': this.getMinutes(), //minute
+          's+': this.getSeconds(), //second
+          'q+': Math.floor((this.getMonth() + 3) / 3),  //quarter
+          'S': this.getMilliseconds(), //millisecond
+        };
+        if (/(y+)/.test(format)) {
+          format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
         }
+        for (var k in o) {
+          if (new RegExp('(' + k + ')').test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length));
+          }
+        }
+        return format;
+      };
     </script>
-</body>
+  </body>
 </html>
